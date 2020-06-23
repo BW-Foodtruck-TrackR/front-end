@@ -5,10 +5,17 @@ import Home from './components/Home'
 import Join from './components/Join'
 import Login from './components/Login'
 import {Route} from'react-router-dom'
+import axios from 'axios';
 
-const initialValues = {
-  userOrOperator: '',
+const initialJoinValues = {
+  userType: '',
   username: '',
+  email: '',
+  password: ''
+}
+
+const initialLoginValues = {
+  userType: '',
   email: '',
   password: ''
 }
@@ -20,21 +27,46 @@ function App() {
 
 
   
-  const [formValues, setFormValues] = useState(initialValues)
+  const [formJoinValues, setJoinFormValues] = useState(initialJoinValues)
+  const [formLoginValues, setLoginFormValues] = useState(initialLoginValues)
   const [user, setUser] = useState(initialUsers)
 
 
 
-  const onChange = evt => {
+  const onChangeJoin = evt => {
     const {name, value} = evt.target;
-    setFormValues({
-      ...formValues,
+    setJoinFormValues({
+      ...formJoinValues,
       [name]: value
     })
     
   }
+
+  const onChangeLogin = evt => {
+    const {name, value} = evt.target;
+    setLoginFormValues({
+      ...formLoginValues,
+      [name]: value
+    })
+  }
   
-  const onSubmit = evt => {
+  const onJoinSubmit = evt => {
+    evt.preventDefault();
+    const newUser = {
+      username: formJoinValues.username,
+      email: formJoinValues.email,
+      password: formJoinValues.password,
+      userType: formJoinValues.userType
+    }
+  }
+
+  const onLoginSubmit = evt => {
+    evt.preventDefault();
+    const loginUser = {
+      email: formLoginValues.email,
+      password: formLoginValues.password,
+      userType: formLoginValues.userType
+    }
 
   }
 
@@ -47,10 +79,10 @@ function App() {
       <Home />
       </Route>
       <Route path='/join'>
-        <Join values={formValues} onChange={onChange} onSubmit={onSubmit} />
+        <Join values={formJoinValues} onChange={onChangeJoin} onSubmit={onJoinSubmit} />
       </Route>
       <Route path='/login'>
-        <Login />
+        <Login values={formLoginValues} onChange={onChangeLogin} onSubmit={onLoginSubmit}  />
       </Route>  
 
     </div>

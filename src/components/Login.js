@@ -3,7 +3,12 @@ import {Button} from 'reactstrap'
 import {Link} from 'react-router-dom'
 
 
-export const Login = () => {
+export const Login = (props) => {
+    const {
+        values,
+        onSubmit,
+        onChange
+    } = props
     return (
         <div className='login'>
             <div className='left'>
@@ -13,13 +18,42 @@ export const Login = () => {
                 <h1>Get started now!</h1>
             </div>
             <div className='right'>
+                
+                <form onSubmit={onSubmit}>
                 <h1>Sign in here</h1>
-                <Link to='/login/user'>
-                    <Button color='primary'>User</Button>
-                </Link>
-                <Link to='/login/operator'>
-                   <Button color='primary'>Operator</Button>
-                </Link>                
+                <label>
+                    Are You a: 
+                    <select
+                        onChange={onChange}
+                        value={values.userType}
+                        name='userType'
+                        >
+                        <option value=''>---Select---</option>
+                        <option value='1'>User</option>
+                        <option value='2'>Operator</option>
+                        </select>
+                </label>
+                    <label>
+                        Email:
+                        <input
+                        type='text'
+                        value={values.email}
+                        name='username'
+                        onChange={onChange}
+                        />
+                    </label>
+                    <label>
+                        Password:
+                        <input
+                        type='text'
+                        name='password'
+                        value={values.password}
+                        onChange={onChange}
+                        />
+                    </label>
+                    <Button color='primary'>Login</Button>
+                </form> 
+                            
             </div>
         </div>
     )
