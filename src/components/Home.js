@@ -16,6 +16,10 @@ export const Home = () => {
                     <Link to='/login'>
                           <Button color='primary'>Login</Button>
                     </Link>
+                    {/* <div className='users'>
+                        <h2>Some of our recent users</h2>
+                        <img src='https://s3.amazonaws.com/uifaces/faces/twitter/follettkyle/128.jpg' />
+                    </div> */}
                     
             </div>
             
