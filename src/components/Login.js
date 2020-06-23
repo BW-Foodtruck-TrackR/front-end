@@ -38,14 +38,14 @@ export const Login = (props) => {
                         <input
                         type='text'
                         value={values.email}
-                        name='username'
+                        name='email'
                         onChange={onChange}
                         />
                     </label>
                     <label>
                         Password:
                         <input
-                        type='text'
+                        type='password'
                         name='password'
                         value={values.password}
                         onChange={onChange}

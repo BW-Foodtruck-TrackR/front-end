@@ -33,12 +33,15 @@ export const Join = (props) => {
                         <option value='2'>Operator</option>
                         </select>
                     </label>
+                    <div className="error">{errors.userType}</div>
                     <label>Name:    
                         <input 
                         value={values.username}
                         onChange={onChange}
                         name='username' />
                     </label>
+                    <div className="error">{errors.username}</div>
+
                     <label>Email:
                         <input
                         value={values.email}
@@ -46,6 +49,7 @@ export const Join = (props) => {
                         name='email'
                         />
                     </label>
+                    <div className="error">{errors.email}</div>
                     <label>Password:
                         <input
                         type='password'
@@ -54,6 +58,7 @@ export const Join = (props) => {
                         name='password'
                         />
                     </label>
+                    <div className="error">{errors.password}</div>
                     <Button color='primary'>Let's Go!</Button>
                 </form>
             </div>
