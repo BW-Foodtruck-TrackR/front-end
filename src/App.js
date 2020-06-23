@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import './App.css';
 import Home from './components/Home'
+import Trucks from './components/Trucks'
 import Join from './components/Join'
 import Login from './components/Login'
 import {Route} from'react-router-dom'
@@ -30,6 +31,7 @@ const initialFormErrors = {
 }
 
 const initialUsers = []
+const initialTrucks = []
 
 function App() {
 
@@ -40,9 +42,21 @@ function App() {
   const [formLoginValues, setLoginFormValues] = useState(initialLoginValues)
   const [user, setUser] = useState(initialUsers)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [trucks, setTrucks] = useState(initialTrucks)
 
-
-
+  const getTrucks = () => {
+    axios.get('https://food-truck-development.herokuapp.com/api/trucks')
+    .then(res=>{
+      console.log(res)
+      setTrucks(res.data)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+  useEffect(() => {
+    getTrucks()
+  }, [])
   const onChangeJoin = evt => {
     const {name, value} = evt.target;
 
@@ -90,6 +104,7 @@ function App() {
       password: formJoinValues.password,
       userType: formJoinValues.userType
     }
+
   }
 
   const onLoginSubmit = evt => {
@@ -116,7 +131,10 @@ function App() {
       </Route>
       <Route path='/login'>
         <Login values={formLoginValues} onChange={onChangeLogin} onSubmit={onLoginSubmit}  />
-      </Route>  
+      </Route> 
+      <Route path='/trucks'>
+        <Trucks trucks={trucks}  />
+        </Route> 
 
     </div>
   );

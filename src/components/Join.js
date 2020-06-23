@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'reactstrap'
+import {Link} from 'react-router-dom'
 
 export const Join = (props) => {
     const {
@@ -59,7 +60,10 @@ export const Join = (props) => {
                         />
                     </label>
                     <div className="error">{errors.password}</div>
-                    <Button color='primary'>Let's Go!</Button>
+                    <Link to='/trucks'>
+                         <Button color='primary'>Let's Go!</Button>
+                    </Link>
+                    
                 </form>
             </div>
         </div>

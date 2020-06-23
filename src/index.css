@@ -33,6 +33,43 @@ code {
   font-size: 2rem;
 }
 
+.hero-trucks {
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: darkorange;
+  text-shadow: black;
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.logout{
+  position: absolute;
+  left: 90%;
+  top: 10%;
+}
+
+.truck{
+  background-color: white;
+  width: 25%;
+  height: 25%;
+  border-radius: 3%;
+  padding: 3%;
+  text-transform: uppercase;
+  
+}
+.truck h2{
+  color: purple;
+}
+
+.purple{
+  color: purple;
+}
+
 .join, .login{
   display: flex;
 }
