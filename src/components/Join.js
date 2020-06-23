@@ -25,8 +25,8 @@ export const Join = (props) => {
                         Are you a ?
                         <select
                         onChange={onChange}
-                        value={values.userOrOperator}
-                        name='userOrOperator'
+                        value={values.userType}
+                        name='userType'
                         >
                         <option value=''>---Select---</option>
                         <option value='1'>User</option>
@@ -48,6 +48,7 @@ export const Join = (props) => {
                     </label>
                     <label>Password:
                         <input
+                        type='password'
                         value={values.password}
                         onChange={onChange}
                         name='password'

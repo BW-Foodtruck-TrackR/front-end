@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 export const Login = (props) => {
     const {
         values,
-        onLoginSubmit,
+        onSubmit,
         onChange
     } = props
     return (
@@ -19,13 +19,25 @@ export const Login = (props) => {
             </div>
             <div className='right'>
                 
-                <form onSubmit={onLoginSubmit}>
+                <form onSubmit={onSubmit}>
                 <h1>Sign in here</h1>
+                <label>
+                    Are You a: 
+                    <select
+                        onChange={onChange}
+                        value={values.userType}
+                        name='userType'
+                        >
+                        <option value=''>---Select---</option>
+                        <option value='1'>User</option>
+                        <option value='2'>Operator</option>
+                        </select>
+                </label>
                     <label>
-                        Username:
+                        Email:
                         <input
                         type='text'
-                        value={values.username}
+                        value={values.email}
                         name='username'
                         onChange={onChange}
                         />
@@ -36,7 +48,7 @@ export const Login = (props) => {
                         type='text'
                         name='password'
                         value={values.password}
-                        onCHnage={onChange}
+                        onChange={onChange}
                         />
                     </label>
                     <Button color='primary'>Login</Button>
