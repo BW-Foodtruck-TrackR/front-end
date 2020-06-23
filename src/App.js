@@ -6,10 +6,15 @@ import Join from './components/Join'
 import Login from './components/Login'
 import {Route} from'react-router-dom'
 
-const initialValues = {
+const initialJoinValues = {
   userOrOperator: '',
   username: '',
   email: '',
+  password: ''
+}
+
+const initialLoginValues = {
+  username: '',
   password: ''
 }
 
@@ -20,21 +25,26 @@ function App() {
 
 
   
-  const [formValues, setFormValues] = useState(initialValues)
+  const [formJoinValues, setJoinFormValues] = useState(initialJoinValues)
+  const [formLoginValues, setLoginFormValues] = useState(initialLoginValues)
   const [user, setUser] = useState(initialUsers)
 
 
 
   const onChange = evt => {
     const {name, value} = evt.target;
-    setFormValues({
-      ...formValues,
+    setJoinFormValues({
+      ...formJoinValues,
       [name]: value
     })
     
   }
   
-  const onSubmit = evt => {
+  const onJoinSubmit = evt => {
+
+  }
+
+  const onLoginSubmit = evt => {
 
   }
 
@@ -47,10 +57,10 @@ function App() {
       <Home />
       </Route>
       <Route path='/join'>
-        <Join values={formValues} onChange={onChange} onSubmit={onSubmit} />
+        <Join values={formJoinValues} onChange={onChange} onSubmit={onJoinSubmit} />
       </Route>
       <Route path='/login'>
-        <Login />
+        <Login values={formLoginValues} onChange={onChange} onSubmit={onLoginSubmit}  />
       </Route>  
 
     </div>
