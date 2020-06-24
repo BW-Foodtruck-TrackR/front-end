@@ -5,9 +5,10 @@ import Home from './components/Home'
 import Trucks from './components/Trucks'
 import Join from './components/Join'
 import Login from './components/Login'
-import {Route} from'react-router-dom'
+import {Route, useHistory} from'react-router-dom'
 import axios from 'axios';
 import * as Yup from 'yup'
+
 // import formSchema from './validation/formSchema'
 import formSchema from './validation/formSchema'
 const initialJoinValues = {
@@ -18,7 +19,7 @@ const initialJoinValues = {
 }
 
 const initialLoginValues = {
-  userType: '',
+  // userType: '',
   email: '',
   password: ''
 }
@@ -32,17 +33,20 @@ const initialFormErrors = {
 
 const initialUsers = []
 const initialTrucks = []
+const initialDisabledValue = true
 
 function App() {
+  const {push} = useHistory()
 
 
 
   
   const [formJoinValues, setJoinFormValues] = useState(initialJoinValues)
   const [formLoginValues, setLoginFormValues] = useState(initialLoginValues)
-  const [user, setUser] = useState(initialUsers)
+  const [users, setUsers] = useState(initialUsers)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [trucks, setTrucks] = useState(initialTrucks)
+  const [disabled, setDisabled] = useState(initialDisabledValue)
 
   const getTrucks = () => {
     axios.get('https://food-truck-development.herokuapp.com/api/trucks')
@@ -54,40 +58,47 @@ function App() {
       console.log(err)
     })
   }
+
+
+  // Effects
   useEffect(() => {
     getTrucks()
   }, [])
+
+  useEffect(() => {
+    formSchema.isValid(formJoinValues).then(valid => {
+      setDisabled(!valid)
+    })
+  },[formJoinValues])
+
+  // Change Handlers
   const onChangeJoin = evt => {
     const {name, value} = evt.target;
 
     // Yup Validation
     Yup
     .reach(formSchema, name)
-    //we can then run validate using the value
     .validate(value)
-    // if the validation is successful, we can clear the error message
     .then(() => {
       setFormErrors({
         ...formErrors,
         [name]: ""
       })
     })
-    /* if the validation is unsuccessful, we can set the error message to the message 
-      returned from yup (that we created in our schema) */
     .catch(err => {
       setFormErrors({
         ...formErrors,
-        [name]: err.errors[0] // investigate
+        [name]: err.errors[0]
       })
     })
 
     setJoinFormValues({
       ...formJoinValues,
       [name]: value
-    })
-    
+    })    
   }
 
+  // Login Change
   const onChangeLogin = evt => {
     const {name, value} = evt.target;
     setLoginFormValues({
@@ -96,6 +107,8 @@ function App() {
     })
   }
   
+
+  // Join Submit
   const onJoinSubmit = evt => {
     evt.preventDefault();
     const newUser = {
@@ -105,14 +118,29 @@ function App() {
       userType: formJoinValues.userType
     }
 
+    postNewUser(newUser)
+    push('/login')
   }
 
+  // Register Post Request
+  const postNewUser = newUser => {
+    
+    axios.post("https://food-truck-development.herokuapp.com/api/auth/register", newUser)
+    .then(res=>{
+      console.log(res.data)
+      setUsers(res.data)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+
+  // Login Submit Handler
   const onLoginSubmit = evt => {
     evt.preventDefault();
     const loginUser = {
       email: formLoginValues.email,
-      password: formLoginValues.password,
-      userType: formLoginValues.userType
+      password: formLoginValues.password
     }
 
   }
@@ -127,14 +155,14 @@ function App() {
       <Home />
       </Route>
       <Route path='/join'>
-        <Join values={formJoinValues} errors={formErrors} onChange={onChangeJoin} onSubmit={onJoinSubmit} />
+        <Join values={formJoinValues} errors={formErrors} onChange={onChangeJoin} onSubmit={onJoinSubmit} disabled={disabled} />
       </Route>
       <Route path='/login'>
         <Login values={formLoginValues} onChange={onChangeLogin} onSubmit={onLoginSubmit}  />
       </Route> 
       <Route path='/trucks'>
-        <Trucks trucks={trucks}  />
-        </Route> 
+        <Trucks trucks={trucks} user={users} />
+      </Route> 
 
     </div>
   );

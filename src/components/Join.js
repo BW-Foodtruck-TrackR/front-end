@@ -7,7 +7,8 @@ export const Join = (props) => {
         values,
         onSubmit,
         onChange,
-        errors
+        errors,
+        disabled
     } = props
     return (
         
@@ -60,9 +61,9 @@ export const Join = (props) => {
                         />
                     </label>
                     <div className="error">{errors.password}</div>
-                    <Link to='/trucks'>
-                         <Button color='primary'>Let's Go!</Button>
-                    </Link>
+                    {/* <Link to='/trucks' > */}
+                         <Button type='submit' color='primary' onSubmit={onSubmit}>Let's Go!</Button>
+                    {/* </Link> */}
                     
                 </form>
             </div>

@@ -2,7 +2,8 @@ import React from 'react'
 import Truck from './Truck'
 
 export const Trucks = (props) => {
-    const {trucks} = props
+    const {trucks, user} = props
+    console.log(user)
     return (
         <div>
          
@@ -10,7 +11,7 @@ export const Trucks = (props) => {
            
             </div>
             <div className='hero-text'>
-                <h1>Welcome Back!</h1>
+    <h1>Welcome Back! {user.username}</h1>
                 <h2>Get Your Grub On!</h2>
                 <h2>Local Trucks</h2>
             </div>
