@@ -65,6 +65,7 @@ function App() {
     getTrucks()
   }, [])
 
+
   useEffect(() => {
     formSchema.isValid(formJoinValues).then(valid => {
       setDisabled(!valid)
@@ -142,9 +143,22 @@ function App() {
       email: formLoginValues.email,
       password: formLoginValues.password
     }
-
+    postLogin(loginUser)
+    push('/trucks')
   }
   
+  // Post Login Req
+  const postLogin = loginUser => {
+    axios.post('https://food-truck-development.herokuapp.com/api/auth/login', loginUser)
+    .then(res=>{
+      console.log(res)
+    })
+    .catch(err=>{
+      console.log(err)
+    })
+  }
+
+
 
   return (
     <div className="App">
@@ -161,7 +175,7 @@ function App() {
         <Login values={formLoginValues} onChange={onChangeLogin} onSubmit={onLoginSubmit}  />
       </Route> 
       <Route path='/trucks'>
-        <Trucks trucks={trucks} user={users} />
+        <Trucks trucks={trucks} />
       </Route> 
 
     </div>
