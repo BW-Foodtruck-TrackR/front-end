@@ -1,6 +1,7 @@
 import React from 'react'
 import Truck from './Truck'
 
+
 export const Trucks = (props) => {
     const {trucks} = props
     return (
@@ -18,11 +19,13 @@ export const Trucks = (props) => {
                 {
                     trucks.map(truck=>{
                         return(
-                        <Truck truck={truck} />
+                        <Truck truck={truck} key={truck.id}/>
                         )
                     })
                 }
+                
             </div>
+         
         </div>
     )
 }

@@ -1,13 +1,14 @@
 import React from 'react'
 import { Button } from 'reactstrap'
-import {Link} from 'react-router-dom'
+
 
 export const Join = (props) => {
     const {
         values,
         onSubmit,
         onChange,
-        errors
+        errors,
+        disabled
     } = props
     return (
         
@@ -60,10 +61,7 @@ export const Join = (props) => {
                         />
                     </label>
                     <div className="error">{errors.password}</div>
-                    <Link to='/trucks'>
-                         <Button color='primary'>Let's Go!</Button>
-                    </Link>
-                    
+                         <Button type='submit' color='primary' onSubmit={onSubmit} disabled={disabled}>Let's Go!</Button>                    
                 </form>
             </div>
         </div>
