@@ -34,6 +34,8 @@ const initialFormErrors = {
 const initialUsers = []
 const initialTrucks = []
 const initialDisabledValue = true
+const initialUser = {}
+const initialLoginError = ''
 
 function App() {
   const {push} = useHistory()
@@ -44,9 +46,11 @@ function App() {
   const [formJoinValues, setJoinFormValues] = useState(initialJoinValues)
   const [formLoginValues, setLoginFormValues] = useState(initialLoginValues)
   const [users, setUsers] = useState(initialUsers)
+  const [user, setUser] = useState(initialUser)
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [trucks, setTrucks] = useState(initialTrucks)
   const [disabled, setDisabled] = useState(initialDisabledValue)
+  const [loginError, setLoginError] = useState(initialLoginError)
 
   const getTrucks = () => {
     axios.get('https://food-truck-development.herokuapp.com/api/trucks')
@@ -102,6 +106,7 @@ function App() {
   // Login Change
   const onChangeLogin = evt => {
     const {name, value} = evt.target;
+    setLoginError(initialLoginError)
     setLoginFormValues({
       ...formLoginValues,
       [name]: value
@@ -120,6 +125,7 @@ function App() {
     }
 
     postNewUser(newUser)
+    setUser(newUser)
     push('/login')
   }
 
@@ -144,7 +150,9 @@ function App() {
       password: formLoginValues.password
     }
     postLogin(loginUser)
-    push('/trucks')
+    setUser(user)
+    console.log(user)
+    
   }
   
   // Post Login Req
@@ -152,9 +160,14 @@ function App() {
     axios.post('https://food-truck-development.herokuapp.com/api/auth/login', loginUser)
     .then(res=>{
       console.log(res)
+      localStorage.setItem('You', res.data.user.username);
+      localStorage.setItem('Token', res.data.token)
+      push('/trucks')
     })
     .catch(err=>{
       console.log(err)
+      setLoginError('incorrect username or password please try again')
+      push('/login')
     })
   }
 
@@ -172,10 +185,11 @@ function App() {
         <Join values={formJoinValues} errors={formErrors} onChange={onChangeJoin} onSubmit={onJoinSubmit} disabled={disabled} />
       </Route>
       <Route path='/login'>
-        <Login values={formLoginValues} onChange={onChangeLogin} onSubmit={onLoginSubmit}  />
+        <Login values={formLoginValues} onChange={onChangeLogin} onSubmit={onLoginSubmit} loginError={loginError}/>
       </Route> 
+ 
       <Route path='/trucks'>
-        <Trucks trucks={trucks} />
+        <Trucks trucks={trucks} user={user} />
       </Route> 
 
     </div>

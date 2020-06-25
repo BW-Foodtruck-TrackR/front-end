@@ -1,3 +1,15 @@
+## Food truck tracker
+
+Created in 2020 this was a project created as an assignment for Lambda school, demonstrating our abilities to succesfully use React.
+Shows use of Validation, Form managment, Git Version Control, States and props.
+Also as a precursor towards the next unit I took it upon myself to learn more about authorization and localstorage
+On the trucks route the username is generated through localstorage as well as the token
+If the user does not enter a registered username on the login page the app will reroute to the login page and show
+a login error
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

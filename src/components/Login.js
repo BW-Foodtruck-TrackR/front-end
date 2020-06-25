@@ -7,7 +7,9 @@ export const Login = (props) => {
     const {
         values,
         onSubmit,
-        onChange
+        onChange,
+        user,
+        loginError
     } = props
     return (
         <div className='login'>
@@ -21,6 +23,7 @@ export const Login = (props) => {
                 
                 <form onSubmit={onSubmit}>
                 <h1>Sign in here</h1>
+                    <div className="error">{loginError}</div>
                     <label>
                         Email:
                         <input
